@@ -118,6 +118,7 @@ void matterComp(void)
     }
 
 #if CONFIG_ENABLE_CHIP_SHELL
+
     esp_matter::console::diagnostics_register_commands();
     esp_matter::console::wifi_register_commands();
     esp_matter::console::init();
