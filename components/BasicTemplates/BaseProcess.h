@@ -14,17 +14,17 @@ namespace DoneMatter {
             ~BaseInterfaceHandler(){};
 
             QueueHandle_t SharedBufQueue;
-            SemaphoreHandle_t SharedSemaphore;
+            SemaphoreHandle_t SharedSemaphore;            
         private:        
     };
     
+    typedef void (*MainTaskPtr)(void *pvParameter);
+
     class BaseProcess
     {            
-        public:            
-            //typedef *struct InterfaceHandler_t;                
-
-            BaseProcess(uint32_t taskDelay_);
-            ~BaseProcess();            
+        public:                        
+            BaseProcess(uint32_t taskDelay_){taskDelay = taskDelay_;};
+            ~BaseProcess(){};            
             bool TaskInit(  BaseInterfaceHandler *BIHandler,                             
                             const char * const pcName,
                             uint16_t usStackDepth,
@@ -32,14 +32,15 @@ namespace DoneMatter {
                             UBaseType_t uxPriority,
                             TaskHandle_t *pxCreatedTask);
         
-        private:      
+            static MainTaskPtr MainTask;
+        private:                  
             static uint32_t taskDelay;
             static BaseInterfaceHandler *InterfaceHandler;   
 
             virtual bool checkEssencialParam();   
-            virtual void JustRunOneTime();
+            //virtual void JustRunOneTime();
             //virtual void Run4Ever();
-            static void MainTask(void *pvParameter);
+            //static void MainTask(void *pvParameter);
     };                
 }
 

@@ -5,16 +5,6 @@
 #include <esp_system.h>
 
 namespace DoneMatter {
-
-BaseProcess::BaseProcess(uint32_t taskDelay_)
-{
-    taskDelay = taskDelay_;
-}
-
-BaseProcess::~BaseProcess()
-{
-    delete InterfaceHandler;
-}            
     
 bool BaseProcess::TaskInit(  
     BaseInterfaceHandler *BIHandler,                             
@@ -26,13 +16,13 @@ bool BaseProcess::TaskInit(
 {
     char buff[50];    
     memset(buff, 0x0, sizeof(buff));
-    sprintf(buff,"%s_Task",pcName);
+    sprintf(buff,"%s_Task",pcName);    
 
-    InterfaceHandler = new BaseInterfaceHandler();
+    InterfaceHandler = BIHandler;
 
     if(checkEssencialParam())
     {        
-        xTaskCreate(&MainTask, buff, usStackDepth, pvParameters, uxPriority, pxCreatedTask);
+        xTaskCreate(MainTask, buff, usStackDepth, pvParameters, uxPriority, pxCreatedTask);
         ESP_LOGI(pcName, "%s app initiated successfully", pcName);
     }
     else
@@ -43,16 +33,16 @@ bool BaseProcess::TaskInit(
     return true;    
 }
 
-void BaseProcess::MainTask(void *pvParameter)
-{
-    //JustRunOneTime();
+// void BaseProcess::MainTask(void *pvParameter)
+// {
+//     //JustRunOneTime();
 
-    while (1)
-    {
-        //Run4Ever();
+//     while (1)
+//     {
+//         //Run4Ever();
 
-        vTaskDelay(pdMS_TO_TICKS(taskDelay));
-    }
-}
+//         vTaskDelay(pdMS_TO_TICKS(taskDelay));
+//     }
+// }
 }
 
