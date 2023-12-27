@@ -41,7 +41,6 @@ extern "C" void app_main()
     unsigned int numberOfTasks = uxTaskGetNumberOfTasks();
     printf("Number of tasks: %u\n", numberOfTasks);
     printf("CONFIG_FREERTOS_HZ =%d\n",CONFIG_FREERTOS_HZ);
-
 }
 
 void MatterAttributeUpdateCBMain(
@@ -56,5 +55,4 @@ void MatterAttributeUpdateCBMain(
     printf("attribute_id: %lu\n", attribute_id);
     printf("val: %p\n", val);
     printf("priv_data: %p\n", priv_data);
-
 }
