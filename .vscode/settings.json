@@ -4,5 +4,14 @@
         "board/esp32s3-bridge.cfg"
     ],
     "idf.flashType": "UART",
-    "idf.port": "/dev/ttyACM0"
+    "idf.port": "/dev/ttyACM0",
+    "files.associations": {
+        "string": "cpp",
+        "array": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    }
 }
