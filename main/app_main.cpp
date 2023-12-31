@@ -3,8 +3,9 @@
 #include "BaseProcess.h"
 #include "DerivedProcess.h"
 
-// DoneMatter::BaseInterfaceHandler bIh;
-// DoneMatter::DeivedInterfaceHandler DerivedbIh;
+DoneMatter::BaseInterfaceHandler bIh;
+DoneMatter::DeivedInterfaceHandler DerivedbIh1;
+DoneMatter::DeivedInterfaceHandler DerivedbIh2;
 
 QueueHandle_t MainBufQueue;
 SemaphoreHandle_t MainSemaphore = NULL;
@@ -18,24 +19,30 @@ extern "C" void app_main()
 {    
     nvs_flash_init();
 
-    MatterInterfaceHandler.SharedBufQueue = &MainBufQueue;
-    MatterInterfaceHandler.SharedSemaphore = &MainSemaphore;
-    MatterInterfaceHandler.MatterAttributeUpdateCB = MatterAttributeUpdateCBMain;
-    Matter_TaskInit(&MatterInterfaceHandler);
+    // MatterInterfaceHandler.SharedBufQueue = &MainBufQueue;
+    // MatterInterfaceHandler.SharedSemaphore = &MainSemaphore;
+    // MatterInterfaceHandler.MatterAttributeUpdateCB = MatterAttributeUpdateCBMain;
+    // Matter_TaskInit(&MatterInterfaceHandler);        
 
-    // DoneMatter::BaseInterfaceHandler bIF;
+    DoneMatter::DerivedProcess dProcess1;
+    dProcess1.TaskInit(
+        &DerivedbIh1,
+        "2ndProcess",
+        2500,
+        (void*) "2ndProcess",
+        5,
+        NULL,
+        1000);//ms          
 
-    // DoneMatter::BaseProcess bP(500);    
-
-    // DoneMatter::DerivedProcess dProcess(500);
-    // dProcess.TaskInit(
-    //     &DerivedbIh,
-    //     "2ndProcess",
-    //     1000,
-    //     NULL,
-    //     1,
-    //     NULL);        
-    // )
+    DoneMatter::DerivedProcess dProcess2;
+    dProcess2.TaskInit(
+        &DerivedbIh2,
+        "3ndProcess",
+        2500,
+        (void*) "3ndProcess",
+        1,
+        NULL,
+        1000);//ms          
 
     vTaskDelay(5000/portTICK_PERIOD_MS);
     unsigned int numberOfTasks = uxTaskGetNumberOfTasks();

@@ -10,19 +10,20 @@ namespace DoneMatter {
         public:
             DeivedInterfaceHandler(){};
             ~DeivedInterfaceHandler(){};
+
             QueueHandle_t localBufQueue;
             SemaphoreHandle_t localSemaphore;          
     };    
 
-    // class DerivedProcess : public BaseProcess
-    // {
-    //     private:
-    //         static void Derived_MainTask(void *pvParameters);    
-
-    //     public:
-    //         DerivedProcess(uint32_t td) {MainTask = Derived_MainTask;};
-    //         ~DerivedProcess(){};
-        
-    // };           
+    class DerivedProcess : public BaseProcess
+    {
+        public:
+            DerivedProcess(){MainTask = Derived_MainTask;};
+            ~DerivedProcess(){};
+            
+        private:
+            static void Derived_MainTask(void *pvParameters);    
+            bool checkEssencialParam() override;                            
+    };           
 }
 #endif //DERIVED_PROCESS_H
